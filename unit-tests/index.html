@@ -1,210 +1,275 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <title>Shower Presentation Engine</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <link rel="stylesheet" href="shower/themes/ribbon/styles/styles.css">
-    <style>
-        .shower {
-            --slide-ratio: calc(16 / 9);
-        }
-    </style>
+  <title>Shower Presentation Engine</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="stylesheet" href="shower/themes/ribbon/styles/styles.css">
+  <style>
+    .shower {
+      --slide-ratio: calc(16 / 9);
+    }
+  </style>
 </head>
 <body class="shower list">
 
-    <header class="caption">
-        <h1>Shower Presentation Engine</h1>
-        <p>Yours Truly, Famous Inc.</p>
-    </header>
+<header class="caption">
+  <h1>Внедрение unit-тестирования</h1>
+  <p>Максим Павлов, ведущий frontend-разработчик</p>
+</header>
 
-    <section class="slide" id="cover">
-        <h2>Shower Presentation Engine</h2>
-        <p>Brought to you by <a href="https://pepelsbey.net">Vadim Makeev</a></p>
-        <figure>
-            <img class="cover" src="pictures/cover.jpg" alt="Hands on the orange typewriter in a park">
-            <figcaption class="copyright right white">
-                <a href="https://fiftyfootshadows.net">© John Carey</a>
-            </figcaption>
-        </figure>
-        <style>
-            #cover h2 {
-                margin: 30px 0 0;
-                color: white;
-                text-align: center;
-                font-size: 70px;
-            }
+<section class="slide" id="cover">
+  <h2>Внедрение unit-тестирования</h2>
+  <p><a href="https://maximpavlov.su" target="_blank">Максим Павлов</a>, senior frontend engineer</p>
+  <figure>
+    <img class="cover width" src="pictures/lego.jpg" alt="Кубики lego">
+  </figure>
+  <style>
+    #cover {
+      text-align: right;
+    }
+    #cover h2 {
+      display: inline-block;
+      margin: 80px 0 0;
+      padding: 0.2em;
+      background: #FF8F00;
+      color: white;
+      font-size: 70px;
+    }
 
-            #cover p {
-                margin: 10px 0 0;
-                text-align: center;
-                color: white;
-                font-style: italic;
-                font-size: 20px;
-            }
+    #cover p {
+      display: inline-block;
+      margin: 10px 0 0;
+      padding: 0.2em 0.6em;
+      text-align: center;
+      background: #FF8F00;
+      color: white;
+      font-style: italic;
+      font-size: 20px;
+    }
 
-            #cover p a {
-                color: white;
-            }
-        </style>
-    </section>
+    #cover p a {
+      color: white;
+    }
+  </style>
+</section>
 
-    <section class="slide">
-        <h2>Shower key features</h2>
-        <ol>
-            <li>Built on HTML, CSS and JavaScript</li>
-            <li>Works in all modern browsers</li>
-            <li>Themes are separated from engine</li>
-            <li>Fully keyboard accessible</li>
-            <li>Printable to PDF</li>
-        </ol>
-        <p class="note">Shower ['ʃəuə] noun. A person or thing that shows.</p>
-    </section>
+<section class="slide">
+  <h2>План</h2>
+  <ol>
+    <li class="next">Зачем нам нужны авто тесты?</li>
+    <li class="next">Что такое unit-тестирование?</li>
+    <li class="next">Инструменты для написания unit-тестов</li>
+    <li class="next">Структура теста</li>
+    <li class="next">Как писать тесты на наши сущности (функции, компоненты, thunk'и, редьюсеры и т.д.)</li>
+  </ol>
+</section>
 
-    <section class="slide">
-        <h2>Plain text on your slides</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur <a href="#4">adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <em>quis nostrud</em> exercitation ullamco laboris <strong>nisi ut aliquip</strong> ex ea commodo consequat. Duis aute irure <i>dolor</i> in reprehenderit in voluptate velit esse cillum <b>dolore</b> eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in <code>&lt;culpa&gt;</code> qui officia deserunt mollit anim id est laborum.</p>
-    </section>
+<section class="slide">
+  <h2>Чем нам помогут авто тесты?</h2>
+  <ul>
+    <li class="next">Помогут уменьшить время тестирования</li>
+    <li class="next">Уменьшат количество регрессий</li>
+  </ul>
+</section>
 
-    <section class="slide">
-        <h2>Two columns if you like</h2>
-        <div class="columns two">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
-        </div>
-    </section>
+<section class="slide">
+  <h2>Unit-тесты</h2>
+  <ul>
+    <li class="next">Тестируют поведение модуля в зависимости от входных параметров.</li>
+    <li class="next">Являются отличным механизмом описания бизнес-требований. Они всегда синхронизированы
+     с кодом и проверяют выполнение этих требований.</li>
+    <li class="next">Позволят нам безопасно проводить рефакторинг.</li>
+    <li class="next">Дадут ответ на вопрос "где сломалось?".</li>
+  </ul>
+</section>
 
-    <section class="slide">
-        <h2>All kind of lists</h2>
-        <ol>
-            <li>Simple lists are marked with bullets</li>
-            <li>Ordered lists begin with a number</li>
-            <li>You can even nest lists one inside another
-                <ul>
-                    <li>Or mix their types</li>
-                    <li>But do not go too far</li>
-                    <li>Otherwise audience will be bored</li>
-                </ul>
-            </li>
-            <li>Look, seven rows exactly!</li>
-        </ol>
-    </section>
+<section class="slide" id="object">
+  <h2 class="shout">
+    Объект тестирования — один модуль
+  </h2>
+  <style>
+    #object h2 {
+      font-size: 77px;
+    }
+  </style>
+</section>
 
-    <section class="slide">
-        <h2>Serious citations</h2>
-        <figure>
-            <blockquote>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
-            </blockquote>
-            <figcaption>Marcus Tullius Cicero</figcaption>
-        </figure>
-    </section>
+<section  class="slide" id="placeholders">
+  <h2>Взаимодействие с другими модулями необходимо "заглушить"</h2>
+  <img src="pictures/placeholders.svg" alt="">
+  <style>
+    #placeholders img {
+      margin-top: 20px;
+    }
+  </style>
+</section>
 
-    <section class="slide">
-        <h2>Code samples</h2>
-        <pre>
-            <code>&lt;!DOCTYPE html&gt;</code>
-            <code class="mark">&lt;html lang="en"&gt;</code>
-            <code><mark>&lt;head&gt;</mark> <span class="comment">&lt;!--Comment--&gt;</span></code>
-            <code>    &lt;title&gt;Shower&lt;/title&gt;</code>
-            <code>    &lt;meta charset="<mark class="important">UTF-8</mark>"&gt;</code>
-            <code>    &lt;link rel="stylesheet" href="screen.css"&gt;</code>
-            <code><mark>&lt;/head&gt;</mark></code>
-        </pre>
-    </section>
+<section class="slide" id="instruments">
+  <h2>Инструменты</h2>
+  <p class="shout">Jest + Enzyme* = <span style="color: #c00">♥</span></p>
+  <style>
+    #instruments .shout {
+      font-size: 77px;
+    }
+  </style>
+</section>
 
-    <section class="slide">
-        <h2>Even tables</h2>
-        <table>
-        <tr>
-            <th scope="col">Locavore</th>
-            <th>Umami</th>
-            <th>Helvetica</th>
-            <th>Vegan</th>
-        </tr>
-        <tr>
-            <th scope="row">Fingerstache</th>
-            <td>Kale</td>
-            <td>Chips</td>
-            <td>Keytar</td>
-        </tr>
-        <tr>
-            <th scope="row">Sriracha</th>
-            <td>Gluten-free</td>
-            <td>Ennui</td>
-            <td>Keffiyeh</td>
-        </tr>
-        <tr>
-            <th scope="row">Thundercats</th>
-            <td>Jean</td>
-            <td>Shorts</td>
-            <td>Biodiesel</td>
-        </tr>
-        <tr>
-            <th scope="row">Terry</th>
-            <td>Richardson</td>
-            <td>Swag</td>
-            <td>Blog</td>
-        </tr>
-        </table>
-        <p>It’s good to have information organized.</p>
-    </section>
+<section class="slide">
+  <h2>Структура теста</h2>
+  <ol>
+    <li class="next">Подготовка</li>
+    <li class="next">Выполнение</li>
+    <li class="next">Проверка</li>
+  </ol>
+</section>
 
-    <section class="slide" id="picture">
-        <h2>Pictures</h2>
-        <figure>
-            <img class="cover" src="pictures/picture.jpg" alt="Orange typewriter on a wooden table close-up">
-            <figcaption class="copyright right white">
-                <a href="https://fiftyfootshadows.net">© John Carey</a>
-            </figcaption>
-        </figure>
-        <style>
-            #picture h2 {
-                color: white;
-            }
-        </style>
-    </section>
+<section class="slide black">
+  <h2 class="shout">Практика</h2>
+</section>
 
-    <section class="slide">
-        <h2 class="shout shrink">You can even shout this way</h2>
-    </section>
+<section class="slide">
+  <pre><code>const calc = (a, b) =&gt; a + b;
+it('должна складывать 2 числа', () =&gt; {
+  const result = calc(1, 2);
+  expect(result).toBe(3);
+});</code></pre>
+</section>
 
-    <section class="slide">
-        <h2>Inner navigation</h2>
-        <ol>
-            <li>Lets you reveal list items one by one</li>
-            <li class="next">To keep some key points</li>
-            <li class="next">In secret from audience</li>
-            <li class="next">But it will work only once</li>
-            <li class="next">Nobody wants to see the same joke twice</li>
-        </ol>
-    </section>
+<section class="slide">
+  <pre><code>const Button = ({ children, loading, onClick }) =&gt; {
+  return (
+    &lt;button onClick={onClick}&gt;
+      {!loading && children}
+      {loading &amp;&amp; &lt;Preloader /&gt;}
+    &lt;/button&gt;
+  );
+};</code></pre>
+</section>
 
-    <section class="slide" id="see-more">
-        <h2 class="shout">
-            <img src="pictures/logo.svg" alt="Shower logo">
-            <a href="https://github.com/shower/shower">See more on GitHub</a>
-        </h2>
-        <style>
-            #see-more h2 {
-                font-size: 100px
-            }
+<section class="slide">
+  <pre><code>describe('&lt;Button/&gt;', () =&gt; {
+  it('должно выводиться содержимое', () =&gt; {
+    const TEXT = 'Some text';
+    const component = shallow(&lt;Button&gt;{TEXT}&lt;/Button&gt;);
+    expect(component.text()).toBe(TEXT);
+  });
+});</code></pre>
+</section>
 
-            #see-more img {
-                width: 0.72em;
-                height: 0.72em;
-            }
-        </style>
-    </section>
+<section class="slide">
+  <pre><code>  it('должен выводиться только прелоадер', () =&gt; {
+    const TEXT = 'Some text';
+    const component = shallow(
+      &lt;Button loading&gt;{TEXT}&lt;/Button&gt;
+    );
+    const preloader = component.find(Preloader);
+    expect(component.text()).not.toContain(TEXT);
+    expect(preloader.length).toBe(1);
+  });</code></pre>
+</section>
 
-    <footer class="badge">
-        <a href="https://github.com/shower/shower">Fork me on GitHub</a>
-    </footer>
+<section class="slide">
+  <pre><code>it('должен вызываться обработчик onClick при клике', () =&gt; {
+    const onClick = jest.fn();
+    const component = shallow(
+      &lt;Button onClick={onClick}&gt;Some text&lt;/Button&gt;
+    );
+    const button = component.find('button');
+    button.simulate('click');
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });</code></pre>
+</section>
 
-    <div class="progress"></div>
+<section class="slide">
+  <pre><code>const UserName = () =&gt; {
+  const name = useSelectorTyped(({ name }) =&gt; name);
+  return (
+    &lt;div&gt;{name}&lt;/div&gt;
+  );
+};</code></pre>
+</section>
 
-    <script src="shower/shower.js"></script>
-    <!-- Copyright © 3000 Yours Truly, Famous Inc. -->
+<section class="slide">
+  <pre><code>import { useSelectorTyped } from 'src/store';
+jest.mock('src/store', () =&gt; ({
+  useSelectorTyped: jest.fn(),
+}));</code></pre>
+</section>
+
+<section class="slide">
+  <pre><code>it('должно выводиться имя пользователя из store', () =&gt; {
+  const USER_NAME = 'Иван Иванов';
+  useSelectorTyped.mockImplementation(
+    (selector) =&gt; selector({
+      name: USER_NAME,
+    })
+  );
+  const component = shallow(&lt;UserName /&gt;);
+  expect(component.text()).toBe(USER_NAME);
+});</code></pre>
+</section>
+
+<section class="slide">
+  <pre><code>import api from 'src/api';
+export const fetchUserName = createAsyncThunk(
+  'userInfo/fetchUserName',
+  async () =&gt; {
+    const data = await api.fetchUserInfo();
+    return { name: data.user.name };
+  },
+);</code></pre>
+</section>
+
+<section class="slide">
+  <pre><code>const initialState = { name: '' };
+describe('userinfo slice', () =&gt; {
+  let store;
+  beforeEach(() =&gt; {
+    store = mockStore(initialState);
+  });
+  afterEach(() =&gt; store.clearActions());
+});</code></pre>
+</section>
+
+<section class="slide">
+  <pre><code>it('должен вызываться action с корректным payload', () =&gt; {
+    api.fetchUserInfo.mockResolvedValue(
+    { user: { name: USER_NAME } }
+    );
+    store.dispatch(fetchUserName());
+    const fulfilledAction = store.getActions()
+      .find(action =&gt;
+        action.type === 'userInfo/fetchUserName/fulfilled');
+    expect(fulfilledAction.payload).toEqual({ name: USER_NAME });
+  });</code></pre>
+</section>
+
+<section class="slide">
+  <pre><code>const userInfoSlice = createSlice({
+  name: 'userInfo',
+  initialState: { name: '', loading: false },
+  extraReducers: (builder) =&gt; {
+    builder.addCase(fetchUserName.pending, (state, action) =&gt; {
+      state.loading = true;
+    });
+  }
+});
+export default userInfoSlice.reducer;</code></pre>
+</section>
+
+<section class="slide">
+  <pre><code>it('должен устанавливаться loading', () =&gt; {
+  const state = store.getState();
+  const updated = reducer(state, fetchUserName.pending);
+  expect(updated.loading).toBe(true);
+});</code></pre>
+</section>
+
+<div class="progress"></div>
+
+<script src="shower/shower.js"></script>
+<!-- Copyright © 3000 Yours Truly, Famous Inc. -->
 
 </body>
 </html>
